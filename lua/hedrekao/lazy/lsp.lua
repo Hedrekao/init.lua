@@ -66,9 +66,19 @@ return {
 			mapping = cmp.mapping.preset.insert({
 				["<C-k>"] = cmp.mapping.select_prev_item(cmp_select),
 				["<C-j>"] = cmp.mapping.select_next_item(cmp_select),
-				["<M-m>"] = cmp.mapping.confirm({ select = true }),
+				["<M-m>"] = cmp.mapping(function()
+					if cmp.visible() then
+						cmp.confirm({
+							select = true,
+						})
+						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, true, true), "n", true)
+					else
+						cmp.complete()
+					end
+				end, { "i", "s" }),
 				["<C-Space>"] = cmp.mapping.complete(),
 			}),
+
 			sources = cmp.config.sources({
 				{ name = "nvim_lsp" },
 				{ name = "luasnip" }, -- For luasnip users.
