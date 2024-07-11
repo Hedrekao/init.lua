@@ -64,8 +64,8 @@ return {
 				end,
 			},
 			mapping = cmp.mapping.preset.insert({
-				["<C-k>"] = cmp.mapping.select_prev_item(cmp_select),
-				["<C-j>"] = cmp.mapping.select_next_item(cmp_select),
+				["<M-k>"] = cmp.mapping.select_prev_item(cmp_select),
+				["<M-j>"] = cmp.mapping.select_next_item(cmp_select),
 				["<M-m>"] = cmp.mapping(function()
 					if cmp.visible() then
 						cmp.confirm({
