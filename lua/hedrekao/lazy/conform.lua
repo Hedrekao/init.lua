@@ -4,6 +4,7 @@ return {
 		formatters_by_ft = {
 			javascript = { "prettier" },
 			typescript = { "prettier" },
+			python = { "autopep8" },
 			lua = { "stylua" },
 		},
 		format_on_save = {
