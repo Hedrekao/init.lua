@@ -30,6 +30,15 @@ return {
 				"lua_ls",
 				"rust_analyzer",
 				"gopls",
+				"gofumpt",
+				"goimports",
+				"golines",
+				"pyright",
+				"prettier",
+				"ruff_lsp",
+				"autopep8",
+				"eslint",
+				"tsserver",
 			},
 			handlers = {
 				function(server_name) -- default handler (optional)
