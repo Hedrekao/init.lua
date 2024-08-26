@@ -9,6 +9,9 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.autoindent = true
 
+vim.opt.laststatus = 3
+vim.opt.splitkeep = "screen"
+
 vim.opt.wrap = false
 
 vim.opt.swapfile = false
