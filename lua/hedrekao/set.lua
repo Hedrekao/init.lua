@@ -31,3 +31,11 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = ""
+
+vim.opt.splitright = true
+
+vim.filetype.add({
+	extension = {
+		["http"] = "http",
+	},
+})
