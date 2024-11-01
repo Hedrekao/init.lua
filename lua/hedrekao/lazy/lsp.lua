@@ -33,7 +33,7 @@ return {
 				"pyright",
 				"ruff_lsp",
 				"eslint",
-				"ts_ls",
+				"tsserver",
 			},
 			handlers = {
 				function(server_name) -- default handler (optional)
