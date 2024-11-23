@@ -26,32 +26,11 @@ return {
 		name = "gruvbox",
 		config = function()
 			require("gruvbox").setup({
-				terminal_colors = true, -- add neovim terminal colors
-				undercurl = true,
-				underline = false,
-				bold = true,
-				italic = {
-					strings = false,
-					emphasis = false,
-					comments = false,
-					operators = false,
-					folds = false,
-				},
-				strikethrough = true,
-				invert_selection = false,
-				invert_signs = false,
-				invert_tabline = false,
-				invert_intend_guides = false,
-				inverse = true, -- invert background for search, diffs, statuslines and errors
-				contrast = "", -- can be "hard", "soft" or empty string
-				palette_overrides = {},
-				overrides = {},
-				dim_inactive = false,
+				contrast = "hard", -- Changed to "hard"
 				transparent_mode = true,
 			})
 		end,
 	},
-
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
@@ -67,11 +46,10 @@ return {
 	{
 		"folke/tokyonight.nvim",
 		config = function()
-			ColorMyPencils()
 			require("tokyonight").setup({
 				-- your configuration comes here
 				-- or leave it empty to use the default settings
-				style = "storm", -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
+				style = "night", -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
 				transparent = true, -- Enable this to disable setting the background color
 				terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
 				styles = {
@@ -84,6 +62,19 @@ return {
 					floats = "dark", -- style for floating windows
 				},
 			})
+		end,
+	},
+	{
+		"sainnhe/gruvbox-material",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			vim.g.gruvbox_material_background = "hard"
+			vim.g.gruvbox_material_foreground = "mix"
+			vim.g.gruvbox_material_diagnostic_virtual_text = "colored"
+			vim.g.gruvbox_material_disable_italic_comment = 1
+
+			ColorMyPencils("gruvbox-material")
 		end,
 	},
 }
