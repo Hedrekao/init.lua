@@ -21,6 +21,12 @@ return {
       ["g."] = { "actions.toggle_hidden", mode = "n" },
       ["g\\"] = { "actions.toggle_trash", mode = "n" },
     },
+    view_options = {
+      show_hidden = true,
+      is_always_hidden = function(name, _)
+        return name:match "%.git$"
+      end
+    }
   },
   -- Optional dependencies
   dependencies = { { "echasnovski/mini.icons", opts = {} } },
