@@ -37,6 +37,21 @@ return {
 		vim.keymap.set("n", "<leader>ps", function()
 			builtin.live_grep()
 		end)
+
+		vim.keymap.set("n", "<leader>pa", function()
+			builtin.live_grep({
+				vimgrep_arguments = {
+					"rg",
+					"--color=never",
+					"--no-heading",
+					"--with-filename",
+					"--line-number",
+					"--column",
+					"--smart-case",
+					"-u",
+				},
+			})
+		end)
 		vim.keymap.set("n", "<leader>vh", builtin.help_tags, {})
 	end,
 }
