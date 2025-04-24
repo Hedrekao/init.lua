@@ -37,7 +37,9 @@ vim.opt.splitright = true
 vim.filetype.add({
 	extension = {
 		["http"] = "http",
+    ['txt'] = "txt",
     ["fsy"] = "fsharp",
     ["fsl"] = "fsharp",
 	},
 })
+
