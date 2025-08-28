@@ -133,5 +133,12 @@ return {
 		vim.keymap.set("n", "<leader>vh", function()
 			fzf.help_tags()
 		end)
+
+		vim.keymap.set("n", "<leader>fr", function()
+			fzf.oldfiles({
+				cwd_only = true,
+				stat_file = true, -- verify files exist on disk
+			})
+		end)
 	end,
 }
