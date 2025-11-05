@@ -2,6 +2,11 @@ require("hedrekao.set")
 require("hedrekao.remap")
 require("hedrekao.lazy_init")
 
+local compiler_mode = require("hedrekao.local.compiler_mode")
+
+vim.keymap.set('n', '<leader>e', compiler_mode.open_yanked_error,
+  { desc = 'Open compiler error' })
+
 local augroup = vim.api.nvim_create_augroup
 local HedrekaoGroup = augroup("Hedrekao", {})
 
