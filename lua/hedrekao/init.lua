@@ -4,8 +4,7 @@ require("hedrekao.lazy_init")
 
 local compiler_mode = require("hedrekao.local.compiler_mode")
 
-vim.keymap.set('n', '<leader>e', compiler_mode.open_yanked_error,
-  { desc = 'Open compiler error' })
+vim.keymap.set("n", "<leader>e", compiler_mode.open_yanked_error, { desc = "Open compiler error" })
 
 local augroup = vim.api.nvim_create_augroup
 local HedrekaoGroup = augroup("Hedrekao", {})
@@ -28,6 +27,21 @@ autocmd({ "BufWritePre" }, {
 	group = HedrekaoGroup,
 	pattern = "*",
 	command = [[%s/\s\+$//e]],
+})
+
+-- Add this to the bottom of your file
+autocmd({ "BufWritePost" }, {
+	group = HedrekaoGroup,
+	callback = function()
+		local file = vim.fn.expand("%:p")
+		-- Check if file is untracked (and not ignored)
+		local is_untracked = vim.fn.system("git ls-files --others --exclude-standard " .. vim.fn.shellescape(file))
+			~= ""
+
+		if is_untracked and vim.fn.system("git rev-parse --is-inside-work-tree"):match("true") then
+			vim.fn.system("git add " .. vim.fn.shellescape(file))
+		end
+	end,
 })
 
 autocmd("LspAttach", {
