@@ -30,7 +30,7 @@ return {
 				"lua_ls",
 				"rust_analyzer",
 				"gopls",
-				"pyright",
+				"ty",
 				"eslint",
 				"ts_ls",
 			},
@@ -49,20 +49,6 @@ return {
 								enable_inlay_hints = true,
 								enable_snippets = true,
 								warn_style = true,
-							},
-						},
-					})
-				end,
-				["pyright"] = function()
-					local lspconfig = require("lspconfig")
-					lspconfig.pyright.setup({
-						capabilities = capabilities,
-						settings = {
-							python = {
-								analysis = {
-									typeCheckingMode = "off",
-									autoImportCompletions = true,
-								},
 							},
 						},
 					})
@@ -156,5 +142,14 @@ return {
 				prefix = "",
 			},
 		})
+
+		-- Add borders to LSP hover and signature help
+		local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+		function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+			opts = opts or {}
+			opts.border = opts.border or "rounded"
+			opts.max_width = opts.max_width or 80
+			return orig_util_open_floating_preview(contents, syntax, opts, ...)
+		end
 	end,
 }

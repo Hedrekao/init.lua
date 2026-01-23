@@ -3,7 +3,6 @@ function ColorMyPencils(color)
 	vim.cmd.colorscheme(color)
 	local highlight_groups = {
 		"Normal",
-		"NormalFloat",
 		"NormalNC",
 		"NormalSB",
 		"TroubleNormal",
@@ -13,6 +12,12 @@ function ColorMyPencils(color)
 	for _, group in ipairs(highlight_groups) do
 		vim.api.nvim_set_hl(0, group, { bg = "none" })
 	end
+
+	-- Set a subtle background for floating windows so they don't blend with transparent bg
+	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#32302f" })
+	-- Set border colors for floating windows to be visible (no bg on border)
+	vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#d5c4a1", bg = "none" })
+	vim.api.nvim_set_hl(0, "LspInfoBorder", { fg = "#d5c4a1", bg = "none" })
 end
 
 return {
