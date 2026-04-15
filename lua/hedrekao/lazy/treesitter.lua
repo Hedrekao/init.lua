@@ -1,53 +1,56 @@
 return {
-	{
-		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
-		config = function()
-			require("nvim-treesitter.configs").setup({
-				-- A list of parser names, or "all"
-				ensure_installed = {
-					"vimdoc",
-					"javascript",
-					"typescript",
-					"c",
-					"lua",
-					"rust",
-					"jsdoc",
-					"bash",
-				},
+  {
+    "nvim-treesitter/nvim-treesitter",
+    branch = "main",
+    build = ":TSUpdate",
+    lazy = false,
+    config = function()
+      -- Enable treesitter highlighting for all supported filetypes
+      local ignore = {
+        "oil",
+        "trouble",
+        "fzf",
+        "qf", -- Quickfix list
+        "NvimTree",
+        "lazy",
+        "mason",
+        "help"
+      }
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("Hedrekao_Treesitter", {}),
+        pattern = "*",
+        callback = function()
+          -- Enable treesitter highlighting
+          if vim.tbl_contains(ignore, vim.bo.filetype) then
+            return
+          end
 
-				-- Install parsers synchronously (only applied to `ensure_installed`)
-				sync_install = false,
-
-				-- Automatically install missing parsers when entering buffer
-				-- Recommendation: set to false if you don"t have `tree-sitter` CLI installed locally
-				auto_install = true,
-
-				indent = {
-					enable = true,
-				},
-
-				highlight = {
-					-- `false` will disable the whole extension
-					enable = true,
-
-					-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-					-- Set this to `true` if you depend on "syntax" being enabled (like for indentation).
-					-- Using this option may slow down your editor, and you may see some duplicate highlights.
-					-- Instead of true it can also be a list of languages
-					additional_vim_regex_highlighting = { "markdown" },
-				},
-			})
-		end,
-	},
-	{
-		"nvim-treesitter/nvim-treesitter-context",
-    enabled=false,
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		config = function()
-			vim.keymap.set("n", "[c", function()
-				require("treesitter-context").go_to_context()
-			end, { silent = true })
-		end,
-	},
+          pcall(vim.treesitter.start)
+          -- Enable treesitter-based indentation
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end,
+      })
+    end,
+    init = function()
+      local ensureInstalled = {
+        'lua', 'python', 'typescript', 'markdown', "terraform", 'javascript', 'json',
+      }
+      local alreadyInstalled = require('nvim-treesitter.config').get_installed()
+      local parsersToInstall = vim.iter(ensureInstalled)
+          :filter(function(parser)
+            return not vim.tbl_contains(alreadyInstalled, parser)
+          end)
+          :totable()
+      require('nvim-treesitter').install(parsersToInstall)
+    end,
+  },
+  -- {
+  -- 	"nvim-treesitter/nvim-treesitter-context",
+  -- 	dependencies = { "nvim-treesitter/nvim-treesitter" },
+  -- 	config = function()
+  -- 		vim.keymap.set("n", "[c", function()
+  -- 			require("treesitter-context").go_to_context()
+  -- 		end, { silent = true })
+  -- 	end,
+  -- },
 }
